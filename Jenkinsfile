@@ -14,9 +14,9 @@ pipeline {
             steps{
                 echo "The responsible of this project is ${AUTHOR} and and will be deployed in ${ENVIRONMENT}"
                 //Fisrt, drop the directory if exists
-                sh 'rm -rf /home/feroracle/jenkins/web'
+                sh 'rm -rf /home/jenkins/web'
                 //Create the directory
-                sh 'mkdir /home/feroracle/jenkins/web'
+                sh 'mkdir /home/jenkins/web'
                 
             }
         }
@@ -29,13 +29,13 @@ pipeline {
         stage('Create the Apache httpd container') {
             steps {
             echo 'Creating the container...'
-            sh 'docker run -dit --name apache1 -p 9000:80  -v /home/feroracle/jenkins/web:/usr/local/apache2/htdocs/ httpd'
+            sh 'docker run -dit --name apache1 -p 9000:80  -v /home/jenkins/web:/usr/local/apache2/htdocs/ httpd'
             }
         }
         stage('Copy the web application to the container directory') {
             steps {
                 echo 'Copying web application...'             
-                sh 'cp -r web/* /home/feroracle/jenkins/web'
+                sh 'cp -r web/* /home/jenkins/web'
             }
         }
         stage('Checking the app') {
